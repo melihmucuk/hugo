@@ -35,3 +35,15 @@ func main() {
 	fmt.Println("writer => ", writer)
 
 }
+```
+
+## TODO
+- [X] Article
+- [X] Search
+- [X] Writer
+- [X] Path
+- [ ] Page
+- [ ] News Photo Gallery
+- [ ] Date
+- [ ] Column
+- [ ] Test
