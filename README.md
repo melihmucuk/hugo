@@ -17,14 +17,14 @@ import (
 func main() {
 	h := hugo.NewHurriyetAPI("YOUR_API_KEY")
 
-	query := &hugo.Query{Top: "10"}
+	query := &hugo.Query{Top: 10}
 	articles, _ := h.ListArticles(query)
 	fmt.Println("articles count => ", len(articles))
 
 	article, _ := h.SingleArticle(articles[0].ID, nil)
 	fmt.Println("article => ", article)
 
-	searchQuery := &hugo.Query{S: "1", Skip: "50", Top: "50"} // default: -1, -1 => new to old , 1 => old to new
+	searchQuery := &hugo.Query{S: "1", Skip: 50, Top: 50} // default: -1, -1 => new to old , 1 => old to new
 	searchResults, _ := h.Search("reina", searchQuery)
 	fmt.Println("results found => ", searchResults.Count)
 
