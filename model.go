@@ -20,10 +20,15 @@ func (self *HurriyetTime) UnmarshalJSON(b []byte) (err error) {
 }
 
 // Query is a struct that contains query properties for endpoints.
+//
 // Filter example: "Path eq '/teknoloji/'"
+//
 // Select example: ["Id", "Description"]
+//
 // Top example: 5 (any int value between 0 and 50)
+//
 // Skip example: 50 (any int value between 0 and 50)
+//
 // S example: -1 or 1 (-1 => new to old, 1 => old to new)
 type Query struct {
 	Filter string
