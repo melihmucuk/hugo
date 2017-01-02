@@ -1,4 +1,4 @@
-# hugo
+# hugo [![GoDoc](https://godoc.org/github.com/melihmucuk/hugo?status.svg)](https://godoc.org/github.com/melihmucuk/hugo) [![Go Report Card](https://goreportcard.com/badge/melihmucuk/hugo)](https://goreportcard.com/report/melihmucuk/hugo)
 Hürriyet API Wrapper For Golang
 
 ## Install
