@@ -19,11 +19,17 @@ func (self *HurriyetTime) UnmarshalJSON(b []byte) (err error) {
 	return
 }
 
+// Query is a struct that contains query properties for endpoints.
+// Filter example: "Path eq '/teknoloji/'"
+// Select example: ["Id", "Description"]
+// Top example: 5 (any int value between 0 and 50)
+// Skip example: 50 (any int value between 0 and 50)
+// S example: -1 or 1 (-1 => new to old, 1 => old to new)
 type Query struct {
-	Filter []string
+	Filter string
 	Select []string
-	Top    string
-	Skip   string
+	Top    int
+	Skip   int
 	S      string
 }
 
@@ -37,7 +43,7 @@ type Article struct {
 	Path        string        `json:"Path"`
 	RelatedNews []interface{} `json:"RelatedNews"`
 	StartDate   HurriyetTime  `json:"StartDate"`
-	Tags        []interface{} `json:"Tags"`
+	Tags        []string      `json:"Tags"`
 	Text        string        `json:"Text"`
 	Title       string        `json:"Title"`
 	URL         string        `json:"Url"`
@@ -73,4 +79,27 @@ type Path struct {
 	ID    string `json:"Id"`
 	Path  string `json:"Path"`
 	Title string `json:"Title"`
+}
+
+type Page struct {
+	ID          string        `json:"Id"`
+	CreatedDate time.Time     `json:"CreatedDate"`
+	RelatedNews []interface{} `json:"RelatedNews"`
+	PageNews    []Article     `json:"PageNews"`
+	Title       string        `json:"Title"`
+	URL         string        `json:"Url"`
+}
+
+type Column struct {
+	ID          string       `json:"Id"`
+	Fullname    string       `json:"Fullname"`
+	ContentType string       `json:"ContentType"`
+	CreatedDate HurriyetTime `json:"CreatedDate"`
+	Description string       `json:"Description"`
+	Files       []File       `json:"Files"`
+	Path        string       `json:"Path"`
+	StartDate   HurriyetTime `json:"StartDate"`
+	Title       string       `json:"Title"`
+	URL         string       `json:"Url"`
+	WriterID    string       `json:"WriterId"`
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -68,6 +69,96 @@ func (h HurriyetAPI) Search(keyword string, query *Query) (Search, error) {
 	}
 
 	return search, nil
+}
+
+func (h HurriyetAPI) ListColumns(query *Query) ([]Column, error) {
+	data, err := h.request("columns", query)
+	if err != nil {
+		return nil, err
+	}
+
+	var columns []Column
+	if jsonErr := json.Unmarshal(data, &columns); jsonErr != nil {
+		// check response for error
+		return nil, jsonErr
+	}
+
+	return columns, nil
+}
+
+func (h HurriyetAPI) SingleColumn(Id string, query *Query) (Column, error) {
+	data, err := h.request("columns/"+Id, query)
+	if err != nil {
+		return Column{}, err
+	}
+
+	var column Column
+	if jsonErr := json.Unmarshal(data, &column); jsonErr != nil {
+		// check response for error
+		return Column{}, jsonErr
+	}
+
+	return column, nil
+}
+
+func (h HurriyetAPI) ListPages(query *Query) ([]Page, error) {
+	data, err := h.request("pages", query)
+	if err != nil {
+		return nil, err
+	}
+
+	var pages []Page
+	if jsonErr := json.Unmarshal(data, &pages); jsonErr != nil {
+		// check response for error
+		return nil, jsonErr
+	}
+
+	return pages, nil
+}
+
+func (h HurriyetAPI) SinglePage(Id string, query *Query) (Page, error) {
+	data, err := h.request("pages/"+Id, query)
+	if err != nil {
+		return Page{}, err
+	}
+
+	var page Page
+	if jsonErr := json.Unmarshal(data, &page); jsonErr != nil {
+		// check response for error
+		return Page{}, jsonErr
+	}
+
+	return page, nil
+}
+
+func (h HurriyetAPI) ListPhotoGalleries(query *Query) ([]Article, error) {
+	data, err := h.request("newsphotogalleries", query)
+	if err != nil {
+		return nil, err
+	}
+
+	var galleries []Article
+	if jsonErr := json.Unmarshal(data, &galleries); jsonErr != nil {
+		// check response for error
+		return nil, jsonErr
+	}
+
+	return galleries, nil
+}
+
+func (h HurriyetAPI) SinglePhotoGallery(Id string, query *Query) (Article, error) {
+	data, err := h.request("newsphotogalleries/"+Id, query)
+	if err != nil {
+		return Article{}, err
+	}
+
+	var gallery Article
+	if jsonErr := json.Unmarshal(data, &gallery); jsonErr != nil {
+		// check response for error
+		return Article{}, jsonErr
+	}
+
+	return gallery, nil
 }
 
 func (h HurriyetAPI) ListPaths(query *Query) ([]Path, error) {
@@ -138,19 +229,19 @@ func (h HurriyetAPI) request(url string, query *Query) ([]byte, error) {
 	if query != nil {
 		q := req.URL.Query()
 		if len(query.Filter) > 0 {
-			q.Add("$filter", strings.Join(query.Filter, ","))
+			q.Add("$filter", query.Filter)
 		}
 
 		if len(query.Select) > 0 {
 			q.Add("$select", strings.Join(query.Select, ","))
 		}
 
-		if query.Top != "" {
-			q.Add("$top", query.Top)
+		if query.Top > 0 {
+			q.Add("$top", strconv.Itoa(query.Top))
 		}
 
-		if query.Skip != "" {
-			q.Add("$skip", query.Skip)
+		if query.Skip > 0 {
+			q.Add("$skip", strconv.Itoa(query.Skip))
 		}
 
 		if query.S != "" {

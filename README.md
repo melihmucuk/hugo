@@ -34,6 +34,10 @@ func main() {
 	writer, _ := h.SingleWriter(writers[2].ID, nil)
 	fmt.Println("writer => ", writer)
 
+	galleryQuery := &hugo.Query{Filter: "Path eq '/teknoloji/'", Top: 5}
+	galleries, _ := h.ListPhotoGalleries(galleryQuery)
+	fmt.Println("photo galleries about 'teknoloji' => ", len(galleries))
+
 }
 ```
 
@@ -42,8 +46,8 @@ func main() {
 - [X] Search
 - [X] Writer
 - [X] Path
-- [ ] Page
-- [ ] News Photo Gallery
+- [X] Page
+- [X] News Photo Gallery
 - [ ] Date
-- [ ] Column
+- [X] Column
 - [ ] Test
