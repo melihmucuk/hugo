@@ -12,12 +12,14 @@ const (
 	baseUrl = "https://api.hurriyet.com.tr/v1/"
 )
 
+// HurriyetAPI keeps apikey and baseUrl info.
 type HurriyetAPI struct {
 	apiKey  string
 	client  *http.Client
 	baseUrl string
 }
 
+// NewHurriyetAPI takes apiKey and returns new HurriyetAPI for communicating Hurriyet API.
 func NewHurriyetAPI(apiKey string) *HurriyetAPI {
 	return &HurriyetAPI{
 		apiKey:  apiKey,
@@ -26,6 +28,7 @@ func NewHurriyetAPI(apiKey string) *HurriyetAPI {
 	}
 }
 
+// ListArticles returns articles.
 func (h HurriyetAPI) ListArticles(query *Query) ([]Article, error) {
 	data, err := h.request("articles", query)
 	if err != nil {
@@ -41,6 +44,7 @@ func (h HurriyetAPI) ListArticles(query *Query) ([]Article, error) {
 	return articles, nil
 }
 
+// SingleArticle takes an id and returns an article .
 func (h HurriyetAPI) SingleArticle(Id string, query *Query) (Article, error) {
 	data, err := h.request("articles/"+Id, query)
 	if err != nil {
@@ -56,6 +60,7 @@ func (h HurriyetAPI) SingleArticle(Id string, query *Query) (Article, error) {
 	return article, nil
 }
 
+// Search takes search keyword and returns search results.
 func (h HurriyetAPI) Search(keyword string, query *Query) (Search, error) {
 	data, err := h.request("search/"+keyword, query)
 	if err != nil {
